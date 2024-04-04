@@ -7,7 +7,10 @@ import { useUserAuth } from "../context/UserAuthContext";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [confirmpassword, setconfirmPassword] = useState("");
   const [password, setPassword] = useState("");
+
+  const [username, setusername] = useState("");
   const { signUp } = useUserAuth();
   let navigate = useNavigate();
 
@@ -15,7 +18,7 @@ const Signup = () => {
     e.preventDefault();
     setError("");
     try {
-      await signUp(email, password);
+      await signUp(email, password, username, confirmpassword);
       navigate("/");
     } catch (err) {
       setError(err.message);
@@ -28,6 +31,14 @@ const Signup = () => {
         <h2 className="mb-3">Firebase Auth Signup</h2>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formBasicUsername">
+            <Form.Control
+              type="username"
+              placeholder="Username"
+              onChange={(e) => setusername(e.target.value)}
+            />
+          </Form.Group>
+
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
               type="email"
@@ -41,6 +52,14 @@ const Signup = () => {
               type="password"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
+            <Form.Control
+              type="password"
+              placeholder=" Confirm Password"
+              onChange={(e) => setconfirmPassword(e.target.value)}
             />
           </Form.Group>
 
